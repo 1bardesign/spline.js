@@ -3,6 +3,8 @@
 
 A small MIT-licensed library of spline helper functions for javascript in the browser.
 
+An interactive, small (<40kb) demo can be found [here](http://static.1bardesign.com/examples/spline/). It's off-github to avoid pulling the noise library it depends on into this repo.
+
 ## Pros:
 
 - Smooth line from control points in one line
