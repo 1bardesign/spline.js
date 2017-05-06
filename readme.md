@@ -20,7 +20,7 @@ A small MIT-licensed library of spline helper functions for javascript in the br
 ```
 var points = [
 	[10,10],
-	[90,10],
+	[10,90],
 	[90,90],
 	[90,10]
 ];
