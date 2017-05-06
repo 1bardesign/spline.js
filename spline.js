@@ -71,13 +71,21 @@
 
 */
 
-//spline types "enum"
+//spline types "enum" - passed to spline ctor to determine curve type
 var spline_type_finite_dif = 0;
 var spline_type_normalised_dif = 1;
 var spline_type_catmull_rom = 2;
 var spline_type_linear = 3;
 
 //spline constructor
+// only the points are really "mandatory"
+//
+// points 			- the array to use as control points
+// step 			- the step (in point units) for each logical point in the final iterated spline
+// tolerance 		- the fractional tolerance in each direction (0.05 is +-5% step accuracy)
+// iteration_limit	- hard limit on iterations while attempting to meet tolerance
+//					  (increase for more accuracy, decrease for faster generation times)
+// spline_type 		- the type of spline, just determines the tangent estimation function
 
 function Spline(points, step, tolerance, iteration_limit, spline_type) {
 	this.points = (points !== undefined ? points : []);
@@ -97,8 +105,8 @@ function Spline(points, step, tolerance, iteration_limit, spline_type) {
 	return this;
 }
 
-//needed after modifications are made to the point coordinates
-//for speeding up iteration
+//needs to be called after modifications are made to the point coordinates
+//for speeding up iteration and normalising finite dif curves.
 Spline.prototype.recalculate = function ()
 {
 	for(var i = 0; i < this.points.length-1; i++)
@@ -111,6 +119,7 @@ Spline.prototype.recalculate = function ()
 	this.points[this.points.length - 1][2] = 1;
 }
 
+//internal
 Spline.prototype.index_frac = function(t)
 {
 	t = Math.max(0, Math.min(t, 1));
@@ -124,6 +133,7 @@ Spline.prototype.index_frac = function(t)
 	return [index, frac];
 }
 
+//internal
 Spline.prototype.tangent_at = function(index) {
 	index = _clamp(Math.floor(index), 0, this.points.length-1);
 	var pindex = _clamp(index - 1, 0, this.points.length-1);
@@ -170,6 +180,7 @@ Spline.prototype.tangent_at = function(index) {
 	}
 }
 
+//get a point along the spline (normalised length 0-1)
 Spline.prototype.at = function(t)
 {
 	t = _clamp(t, 0, 1);
@@ -219,6 +230,8 @@ Spline.prototype.at = function(t)
 	return [px_t, py_t, weight];
 }
 
+//iterate the next point from a given point on the spline
+//returns the t value and the point, as an array
 Spline.prototype.iterate_next_point = function(t)
 {
 	var prev_t = t;
@@ -257,6 +270,7 @@ Spline.prototype.iterate_next_point = function(t)
 	return [t, next_pos]
 }
 
+//get the nearest control point index for a given position
 Spline.prototype.nearest_control_point_i = function(pos) {
 	//get nearest index
 	var minimum_distance = 10000000.0;
@@ -273,10 +287,12 @@ Spline.prototype.nearest_control_point_i = function(pos) {
 	return chosen_i;
 }
 
+//get the nearest control point for a given position
 Spline.prototype.nearest_control_point = function(pos) {
 	return this.points[this.nearest_control_point_i(pos)];
 }
 
+//get the nearest normalised length along the spline (0-1) from a given position
 Spline.prototype.nearest_t = function(pos) {
 	//get nearest index
 	var chosen_i = this.nearest_control_point_i(pos);
@@ -307,10 +323,12 @@ Spline.prototype.nearest_t = function(pos) {
 	return chosen_t;
 }
 
+//get the nearest point along the spline from a given position
 Spline.prototype.nearest_point = function(pos) {
 	return this.at(this.nearest_t(pos));
 }
 
+//convert the entire spline to points for rendering
 Spline.prototype.to_points = function() {
 	var spline_points = [];
 	var t = 0;
