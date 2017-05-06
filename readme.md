@@ -5,15 +5,15 @@ A small MIT-licensed library of spline helper functions for javascript in the br
 
 ## Pros:
 
-	- Smooth line from control points in one line
-	- Query from nearest points (nearest-on-line and nearest control point)
-	- Multiple tangent-estimation functions built-in
-	- Pretty small, ~5k minified without mangling
+- Smooth line from control points in one line
+- Query from nearest points (nearest-on-line and nearest control point)
+- Multiple tangent-estimation functions built-in
+- Pretty small, ~5k minified without mangling
 
 ## Cons:
 
-	- uses arrays as 2d vectors -> gc churn
-	- iterative, not analytical -> "not perfect"
+- uses arrays as 2d vectors -> gc churn
+- iterative, not analytical -> "not perfect"
 
 # Example:
 
