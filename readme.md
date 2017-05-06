@@ -3,7 +3,7 @@
 
 A small MIT-licensed library of spline helper functions for javascript in the browser.
 
-An interactive, small (<40kb) demo can be found [here](http://static.1bardesign.com/examples/spline/). It's off-github to avoid pulling the noise library it depends on into this repo.
+An interactive, small (<40kb) demo can be found [here](http://static.1bardesign.com/examples/spline/). It's off-github to avoid pulling the noise library it depends on into this repo, I'll do my best to keep it available indefinitely.
 
 ## Pros:
 
