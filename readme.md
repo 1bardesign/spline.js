@@ -15,7 +15,7 @@ An interactive, small (<40kb) demo can be found [here](http://static.1bardesign.
 ## Cons:
 
 - uses arrays as 2d vectors -> gc churn
-- iterative, not analytical -> "not perfect"
+- some functions are iterative, not analytical -> "not perfect"
 
 # Examples:
 

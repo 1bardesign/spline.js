@@ -10,7 +10,7 @@
 		- Pretty small, ~5k minified without mangling
 	Cons:
 		- uses arrays as 2d vectors -> gc churn
-		- iterative, not analytical -> "not perfect"
+		- some functions are iterative, not analytical -> "not perfect"
 
 	-------------------------------------------------------------------------------
 	Example:
