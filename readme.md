@@ -43,13 +43,13 @@ var s = new Spline(points, 2, 0.01, 32, spline_type_catmull_rom);
 var s = new Spline(points, 10, 0.05, 8, spline_type_finite_dif);
 ```
 
-Getting a list of "raw" points for rendering the entire spline is a single call, and can be done as a one-liner for throwaway data.
+You can get a list of "raw" points for rendering the entire spline in a single call.
 
 ```
 //getting points for rendering
 var polyline = s.get_points();
-//(one-liner version)
-// var polyline = new Spline(points).get_points();
+//(one-liner version for throwaway data)
+var polyline = new Spline(points).get_points();
 ```
 
 You can do a few other things with a spline as well, including getting points along it, checking adjacency for arbitrary input points, and getting the nearest control point. The latter can be used to modify the spline using mouse coordinates, for example. Don't forget to recalculate after doing so though!
@@ -67,4 +67,4 @@ nearest_ctrl[1] += 20;
 s.recalculate();
 ```
 
-For the full interface, have a scroll through spline.js, it's pretty short and each function is prefaced with a comment explaining what it's for.
+For the full interface, have a scroll through [the source](https://github.com/1bardesign/spline.js/blob/master/spline.js), it's pretty short and each function is prefaced with a comment explaining what it's for!
